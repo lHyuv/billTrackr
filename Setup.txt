@@ -1,0 +1,8 @@
+Requirements:
+Python
+MySQL
+MySQL Database named "billtrackr"
+
+Steps:
+
+N/A yet
