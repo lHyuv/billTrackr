@@ -3,7 +3,7 @@ from database import Base, engine
 from sqlalchemy.sql import func
 
 class Category(Base):
-    __tablename__ = "categories"
+    __tablename__ = "tbl_categories"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(70), unique=True, nullable=False)
     date_created = Column(DateTime, server_default=func.now())

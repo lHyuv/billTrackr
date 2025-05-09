@@ -14,8 +14,8 @@ async def create_user(user: UserBase, db: Session = Depends(get_db) ):
         db.add(data)
         db.commit()
         return { "message": "Success", "data": User(**user.dict()) }
-    except:
-        return {"message":"Failed. User already exists."}
+    except Exception as e:
+        return {"message":"Failed.", "error": e}
 
 #read
 @user_route_app.get("/{id}")
@@ -35,14 +35,15 @@ async def get_user(db: Session = Depends(get_db)):
         return {"message": "Failed. User does not exist."} 
     
 #update
-@user_route_app.put("/{id}")
+@user_route_app.put("/update/{id}")
 async def update_user( user: UserBase, id: int, db: Session = Depends(get_db)):
     user_data = db.query(User).filter(User.id == id).filter(User.deleted == 0).first()
     if not user_data == None:
         try:
             user_data = {
                 "username": user.username,
-                "password": user.password
+                "password": user.password,
+                "budget": user.budget
             }
             db.query(User).filter(User.id == id).filter(User.deleted == 0).update(user_data)
             db.commit()
@@ -55,7 +56,7 @@ async def update_user( user: UserBase, id: int, db: Session = Depends(get_db)):
 
 #delete
 @user_route_app.put("/delete/{id}")
-async def update_user( id: int, db: Session = Depends(get_db)):
+async def delete_user( id: int, db: Session = Depends(get_db)):
     user_data = db.query(User).filter(User.id == id).first()
     if not user_data == None:
         try:
