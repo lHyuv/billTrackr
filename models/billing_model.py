@@ -7,7 +7,7 @@ class Billing(Base):
     __tablename__ = "billings"
     id = Column(Integer, primary_key=True, index=True)
     remarks = Column(String(200), nullable=True)
-    date = Column(DateTime, nullable = True, server_default=func.now())
+    date = Column(DateTime, nullable = False)
     date_created = Column(DateTime, server_default=func.now())
     date_updated = Column(DateTime, server_onupdate=func.now())
     deleted = Column(Integer, default = 0)
